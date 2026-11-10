@@ -1,0 +1,99 @@
+name: Λletheia • Deploy website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - deployment/Aletheia_Website_V0.0.zip
+      - .github/workflows/pages.yml
+      - index.html
+      - docs.html
+      - playground.html
+      - research.html
+      - assets/**
+      - library/**
+      - scripts/**
+      - styles/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  unpack:
+    name: Extract exact V0.0 source to main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Expand the original website archive into repo root
+        run: |
+          python3 - <<'PY'
+          import pathlib, zipfile, tempfile, shutil
+          root=pathlib.Path.cwd()
+          archive=root/'deployment/Aletheia_Website_V0.0.zip'
+          with tempfile.TemporaryDirectory() as temp:
+              with zipfile.ZipFile(archive) as z:
+                  bad=[p for p in z.namelist() if p.startswith('/') or '..' in pathlib.PurePosixPath(p).parts]
+                  if bad:
+                      raise SystemExit(f'Unsafe archive paths: {bad}')
+                  z.extractall(temp)
+              source=pathlib.Path(temp)/'aletheia-website-v0'
+              required={'index.html','docs.html','playground.html','research.html',
+                        'styles/site.css','scripts/site.js','assets/aletheia-lockup.png',
+                        'library/Aletheia-Marco-Zero-v0.8.pdf'}
+              missing=[p for p in required if not (source/p).is_file()]
+              if missing:
+                  raise SystemExit(f'Missing site files: {missing}')
+              for item in source.iterdir():
+                  target=root/item.name
+                  if item.is_dir():
+                      shutil.copytree(item,target,dirs_exist_ok=True)
+                  else:
+                      shutil.copy2(item,target)
+          print('Exact website source extracted, including logo and original PDFs.')
+          PY
+      - name: Commit expanded source for future editing
+        run: |
+          git config user.name "aletheia-site[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f .nojekyll README.md index.html docs.html playground.html research.html assets scripts styles library
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish full Λletheia V0.0 source files [skip ci]"
+            git push origin HEAD:main
+          fi
+
+  deploy:
+    name: Publish V0.0 on GitHub Pages
+    needs: unpack
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Prepare static deployment
+        run: |
+          mkdir -p _site
+          cp index.html docs.html playground.html research.html _site/
+          cp -R assets styles scripts library _site/
+          touch _site/.nojekyll
+          test -s _site/index.html
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
