@@ -1,7 +1,7 @@
-# Λletheia — Website Oficial · V0.0
+# Λletheia — Website Oficial · RC1 documentation + Academy
 
-**Experimental website build — 10 November 2026**  
-Based on the canonical visual identity v1.0, supplied logo and consolidated *Marco Zero v0.9*; Rev11 draft research notes are marked explicitly. No writes to `Antoniorjr4/Aletheia` or `Antoniorjr4/Aletheia-Lab` are performed by this package.
+**Website content update — 11 November 2026**  
+Preserves the established visual identity and original logo. Primary technical content now follows *v1.0-RC1* (draft PR #5, based on Rev13). The language repository main is not changed. No writes to `Antoniorjr4/Aletheia` or `Antoniorjr4/Aletheia-Lab` are performed.
 
 ## View locally — one command
 
@@ -17,7 +17,7 @@ Open **http://localhost:8080** in a browser. If `python` is unavailable, `npx se
 
 - `index.html` — brand home, philosophy, compiler architecture, code samples and research summary, with versioned/review status.
 - `docs.html` — searchable technical library with 15+ chapters, TOC, code-copy tools and source PDFs.
-- `playground.html` — educational local syntax/analyzer demonstration. **Not a WASM/real `athc` compilation or LLM call.**
+- `academy.html` — nine bilingual lessons with source-grounded examples, short quizzes, local-only progress and a capstone. No certification, no browser compiler.\n- `playground.html` — educational local syntax/analyzer demonstration. **Not a WASM/real `athc` compilation or LLM call.**
 - `research.html` — four research dashboards: AgentDojo, M1, formal proofs, runtime evidence.
 
 The EN/PT switch remembers the selected language locally. Main prose and editorial landing pages are localized; research tabular data and CLI syntax deliberately retain canonical English notation.
@@ -43,7 +43,7 @@ For a custom domain, configure DNS/SSL on your chosen host. Site navigation uses
 
 - Brand asset: user-supplied original `Gemini_Generated_Image_vme8dvme8dvme8dv.jpg`, kept unaltered in `assets/aletheia-original.jpg`.
 - Derived RGBA brand lockup: `assets/aletheia-lockup.png` preserving logo geometry, right-open stroke and lower anchor. The visual manual uses a Deep Void `#000000` base, Radiant Cyan `#38BDF8`, Platinum Steel `#E2E8F0`, Slate Monolith `#CBD5E1`.
-- Technical baseline: public main `Antoniorjr4/Aletheia@245214b` (Marco Zero v0.9); the bundled v0.8 PDF remains an explicitly labeled archive. Rev11 is a draft PR, not a merged release.
+- Technical content: v1.0-RC1 branch `release/v1.0-rc1`, draft PR #5. The older main v0.9 baseline and Rev11 remain historical research. The outdated Marco Zero PDF has been removed from the public site.
 - Research claims, samples and limitations are drawn from the bundled primary source PDFs. This site is a communication layer, **not a claim of production certification**.
 
 ### Features
