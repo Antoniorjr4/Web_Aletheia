@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [site-rc1-academy]
+    branches: [site-rc1-academy, site-rc10-ciclo1]
 permissions:
   contents: read
 jobs:
@@ -53,7 +53,11 @@ jobs:
           assert "release/v1.0-rc1" in docs and "s.authorizes" in docs
           assert 'getLesson' in academy and 'academy-feedback' in academy
           assert 'localStorage' in academy and 'querySelector' in academy
-          print('5 pages, JS syntax, anchors, Academy and RC1 sources: OK')
+          assert "id:'releases'" in docs and "id:'ciclo1'" in docs and 'release/v1.0-rc10' in docs
+          research=Path('research.html').read_text()
+          for view in ('agentdojo','compare','m10','formal','system','m1'):
+              assert f'id="report-{view}"' in research, f'missing research view {view}'
+          print('5 pages, JS syntax, anchors, Academy, RC1 history and RC10/cycle 1 sources: OK')
           PY
       - name: Ensure unchanged stylesheet and branding assets
         run: |

@@ -1,5 +1,11 @@
 # Λletheia website — editorial status of technical evidence
 
+## Version sources (24 November 2026)
+
+**Current website documentation:** v1.0-RC10 (`release/v1.0-rc10`) and consolidation cycle 1 (`consolidacao/ciclo-1`). Evidence: RC10 251 Rust tests, 0 failures; 192 Lean axiom guards, no sorry; AgentDojo banking 144/144 pairs — Λletheia 0/144 attacks vs baseline 106/144; cycle 1 run (US$ 0.20) — v3 92/144, v2 76/144, hardened Python 67/144 utility under attack, all 0/144 attacks; M10 negative result (2/24 vs 10/24) published unchanged. Not merged into main.
+
+**Presentation rule added:** publish the negative results (hardened-Python security tie, refuted change-effort hypothesis, M10) next to the positive ones.
+
 ## Version sources (11 November 2026)
 
 **Current website documentation:** v1.0-RC1 — draft PR #5 `release/v1.0-rc1` based on Rev13. Evidence: 131 Rust tests, Lean 96 guards, 26/26 differential, 16/16 SIGKILL recovery, grant harness 33/33 refusals and 8/8 controls, no paid Groq calls. RC1 is *not* merged.
